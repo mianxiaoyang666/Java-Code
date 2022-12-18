@@ -15,7 +15,6 @@ class ListNode {
     void a () {
         ListNode node = new ListNode(1);
     }
-    ListNode head = 
     void add(int val) {
         ListNode node = new ListNode(val);
 
