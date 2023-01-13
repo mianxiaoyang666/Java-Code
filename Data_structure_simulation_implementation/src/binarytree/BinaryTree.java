@@ -1,5 +1,10 @@
 package binarytree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -18,6 +23,7 @@ public class BinaryTree {
         }
     }
 
+    public TreeNode root;
 
     /**
      * 创建一棵二叉树 返回这棵树的根节点
@@ -25,19 +31,52 @@ public class BinaryTree {
      * @return
      */
     public TreeNode createTree() {
-
+        TreeNode A = new TreeNode('A');
+        TreeNode B = new TreeNode('B');
+        TreeNode C = new TreeNode('C');
+        TreeNode D = new TreeNode('D');
+        TreeNode E = new TreeNode('E');
+        TreeNode F = new TreeNode('F');
+        TreeNode G = new TreeNode('G');
+        TreeNode H = new TreeNode('H');
+        A.left = B;
+        A.right = C;
+        B.left = D;
+        B.right = E;
+        C.left = F;
+        C.right = G;
+        G.left = H;
+        return A;
     }
 
     // 前序遍历
     public void preOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        System.out.print(root.val + " ");
+        preOrder(root.left);
+        preOrder(root.right);
     }
 
     // 中序遍历
-    void inOrder(TreeNode root) {
+    public void inOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left);
+        System.out.print(root.val + " ");
+        inOrder(root.right);
     }
 
     // 后序遍历
-    void postOrder(TreeNode root) {
+    public void postOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        postOrder(root.left);
+        postOrder(root.right);
+        System.out.print(root.val + " ");
     }
 
     public static int nodeSize;
@@ -46,15 +85,26 @@ public class BinaryTree {
      * 获取树中节点的个数：遍历思路
      */
     void size(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        nodeSize++;
+        size(root.left);
+        size(root.right);
     }
 
     /**
-     * 获取节点的个数：子问题的思路
-     *
-     * @param root
-     * @return
+     * //     * 获取节点的个数：子问题的思路
+     * //     *
+     * //     * @param root
+     * //     * @return
+     * //
      */
-    int size2(TreeNode root) {
+    public int size2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return size2(root.left) + size2(root.right) + 1;
     }
 
 
@@ -64,43 +114,144 @@ public class BinaryTree {
     public static int leafSize = 0;
 
     void getLeafNodeCount1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            leafSize++;
+        }
+        getLeafNodeCount1(root.left);
+        getLeafNodeCount1(root.right);
     }
 
     /*
      获取叶子节点的个数：子问题
      */
-    int getLeafNodeCount2(TreeNode root) {
+    public int getLeafNodeCount2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        int leftLeafSize = getLeafNodeCount2(root.left);
+        int rightLeafSize = getLeafNodeCount2(root.right);
+        return leftLeafSize + rightLeafSize;
     }
 
     /*
     获取第K层节点的个数
      */
-    int getKLevelNodeCount(TreeNode root, int k) {
+    public int getKLevelNodeCount(TreeNode root, int k) {
+        if (root == null) {
+            return 0;
+        }
+        if (k == 1) {
+            return 1;
+        }
+        int leftSize = getKLevelNodeCount(root.left, k - 1);
+        int rightSize = getKLevelNodeCount(root.right, k - 1);
+        return leftSize + rightSize;
     }
 
     /*
      获取二叉树的高度
      时间复杂度：O(N)
      */
-    int getHeight(TreeNode root) {
-
+    public int getHeight(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        int leftTree = getHeight(root.left);
+        int rightTree = getHeight(root.right);
+        return leftTree > rightTree ? leftTree + 1 : rightTree + 1;
     }
 
 
     // 检测值为value的元素是否存在
-    TreeNode find(TreeNode root, char val) {
-
+    public TreeNode find(TreeNode root, char val) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == val) {
+            return root;
+        }
+        TreeNode leftTree = find(root.left, val);
+        TreeNode rightTree = find(root.right, val);
+        if (leftTree != null) {
+            return leftTree;
+        }
+        if (rightTree != null) {
+            return rightTree;
+        }
         return null;
     }
 
     //层序遍历
-    void levelOrder(TreeNode root) {
+    public void levelOrder(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            if (cur.left != null) {
+                queue.offer(cur.left);
+            }
+            if (cur.right != null) {
+                queue.offer(cur.right);
+            }
+            System.out.print(cur.val + " ");
+        }
 
     }
 
 
     // 判断一棵树是不是完全二叉树
-    boolean isCompleteTree(TreeNode root) {
+    public boolean isCompleteTree(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean flg = false;
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            if (flg) {
+                if (cur.left != null || cur.right != null) {
+                    return false;
+                }
+            } else {
+                if (cur.left != null && cur.right != null) {
+                    queue.offer(cur.left);
+                    queue.offer(cur.right);
+                } else if (cur.left != null) {//cur.left != null && cur.right == null
+                    queue.offer(cur.left);
+                    flg = true;
+                } else if (cur.right != null) {//cur.right != null && cur.left == null
+                    return false;
+                } else {
+                    flg = true;
+                }
+            }
+
+        }
         return true;
     }
 }
+
+    //中序遍历
+//    public List<Character> func(TreeNode root) {
+//        List<Character> ret = new ArrayList<>();
+//        if (root == null) {
+//            return ret;
+//        }
+//        List<Character> leftTree = func(root.left);
+//        ret.addAll(leftTree);
+//        ret.add(root.val);
+//        List<Character> rightTree = func(root.right);
+//        ret.addAll(rightTree);
+//        return ret;
+//    }
+//}
