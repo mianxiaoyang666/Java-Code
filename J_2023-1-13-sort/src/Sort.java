@@ -55,4 +55,23 @@ public class Sort {
             array[i] = min;
         }
     }
+
+    private static int partition(int[] array,int left,int right) {
+        int tmp = array[left];
+        while(left < right) {
+            while(left < right && array[right] >= tmp) {
+                right--;
+            }
+            int cur = array[left];
+            array[left] = array[right];
+            array[right] = cur;
+            while(left < right && array[left] <= tmp) {
+                left++;
+            }
+            cur = array[left];
+            array[left] = array[right];
+            array[right] = cur;
+        }
+        array[left] = tmp;
+    }
 }

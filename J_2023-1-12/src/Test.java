@@ -9,11 +9,11 @@ public class Test {
     public void pop() {
 
     }
-    public boolean isEmpty() {
-        return usedSize == 0;
-    }
+//    public boolean isEmpty() {
+//        return usedSize == 0;
+//    }
 
     public static void main(String[] args) {
-
+        System.out.println(false && false);
     }
 }

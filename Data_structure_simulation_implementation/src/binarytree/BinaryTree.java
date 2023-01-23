@@ -24,6 +24,7 @@ public class BinaryTree {
     }
 
     public TreeNode root;
+    public TreeNode root2;
 
     /**
      * 创建一棵二叉树 返回这棵树的根节点
@@ -31,22 +32,49 @@ public class BinaryTree {
      * @return
      */
     public TreeNode createTree() {
-        TreeNode A = new TreeNode('A');
-        TreeNode B = new TreeNode('B');
-        TreeNode C = new TreeNode('C');
-        TreeNode D = new TreeNode('D');
-        TreeNode E = new TreeNode('E');
-        TreeNode F = new TreeNode('F');
+        TreeNode A = new TreeNode('3');
+        TreeNode B = new TreeNode('4');
+        TreeNode C = new TreeNode('5');
+        TreeNode D = new TreeNode('1');
+        TreeNode E = new TreeNode('2');
+        TreeNode F = new TreeNode('0');
         TreeNode G = new TreeNode('G');
         TreeNode H = new TreeNode('H');
         A.left = B;
         A.right = C;
         B.left = D;
         B.right = E;
-        C.left = F;
-        C.right = G;
-        G.left = H;
+        E.left = F;
         return A;
+    }
+    public TreeNode createTree2() {
+        TreeNode A = new TreeNode('4');
+        TreeNode B = new TreeNode('1');
+        TreeNode C = new TreeNode('2');
+        A.left = B;
+        A.right = C;
+        return A;
+    }
+
+    //判断是否是子树
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(root == null) {
+            return false;
+        }
+        return isSameTree(root,subRoot) || isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
+    }
+
+    public boolean isSameTree(TreeNode root, TreeNode subRoot) {
+        if(root == null && subRoot != null || root != null && subRoot == null) {
+            return false;
+        }
+        if(root == null && subRoot == null) {
+            return true;
+        }
+        if(root.val != subRoot.val) {
+            return false;
+        }
+        return isSameTree(root.left,subRoot.left) && isSameTree(root.right,subRoot.right);
     }
 
     // 前序遍历
