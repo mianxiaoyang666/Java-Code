@@ -1,8 +1,6 @@
 package test;
 
-import binarytree.BinaryTree;
-
-import javax.swing.tree.TreeNode;
+import binarytree.CharBinaryTree;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,10 +11,10 @@ import javax.swing.tree.TreeNode;
  */
 public class Test2 {
     public static void main(String[] args) {
-        BinaryTree binaryTree = new BinaryTree();
-        binaryTree.root= binaryTree.createTree();
-        binaryTree.root2 = binaryTree.createTree2();
-        boolean a = binaryTree.isSubtree(binaryTree.root,binaryTree.root2);
+        CharBinaryTree charBinaryTree = new CharBinaryTree();
+        charBinaryTree.root= charBinaryTree.createTree();
+        charBinaryTree.root2 = charBinaryTree.createTree2();
+        boolean a = charBinaryTree.isSubtree(charBinaryTree.root, charBinaryTree.root2);
         System.out.println(a);
     }
 

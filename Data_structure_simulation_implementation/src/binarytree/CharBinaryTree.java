@@ -1,8 +1,6 @@
 package binarytree;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -12,7 +10,7 @@ import java.util.Queue;
  * Date: 2023-01-12
  * Time: 16:31
  */
-public class BinaryTree {
+public class CharBinaryTree {
     static class TreeNode {
         public char val;
         public TreeNode left;//左孩子的引用
@@ -267,6 +265,7 @@ public class BinaryTree {
         }
         return true;
     }
+
 }
 
     //中序遍历
