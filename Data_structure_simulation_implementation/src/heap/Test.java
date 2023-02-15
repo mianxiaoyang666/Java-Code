@@ -15,6 +15,7 @@ public class Test {
         priorityQueue.createHeap(priorityQueue.elem);
         priorityQueue.createHeap(array);
         priorityQueue.push(100);
-
+        int[] arr2 = {2,34,54,32,76,43,65,74,38,48};
+        priorityQueue.smallestK(arr2,0);
     }
 }

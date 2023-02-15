@@ -12,7 +12,7 @@ public class PriorityQueue {
 
     public int usedSize;
 
-    public PriorityQueue() {
+    public PriorityQueue()  {
         this.elem = new int[10];
     }
 
@@ -98,14 +98,26 @@ public class PriorityQueue {
     public void push(int val) {
         checkSize(usedSize+1);
         elem[usedSize++] = val;
-        createHeap(this.elem);
+        shiftUp(usedSize-1);
     }
 
     private void shiftUp(int child) {
-
+        int parent = (child-1)*2;
+        while(child > 0) {
+            if(elem[child] > elem[parent]) {
+                int tmp = elem[child];
+                elem[child] = elem[parent];
+                elem[parent] = tmp;
+                child = parent;
+                parent = (child-1) * 2;
+            }else {
+                break;
+            }
+        }
     }
 
     public boolean isFull() {
+        return usedSize == elem.length;
     }
 
     /**
@@ -113,9 +125,19 @@ public class PriorityQueue {
      * 仍然要保持是大根堆
      */
     public void pollHeap() {
+        if(!isEmpty()) {
+            swap(0,usedSize-1);
+            usedSize--;
+            shiftDown1(0,usedSize);
+        }
     }
-
+    private void swap(int i,int j) {
+        int tmp = elem[i];
+        elem[i] = elem[j];
+        elem[j] = tmp;
+    }
     public boolean isEmpty() {
+        return usedSize == 0;
     }
 
     /**
@@ -123,5 +145,30 @@ public class PriorityQueue {
      * @return
      */
     public int peekHeap() {
+        return elem[0];
+    }
+
+    public int[] smallestK(int[] arr, int k) {
+        int len = arr.length;
+        for(int parent = (len-1-1)/2; parent >= 0; parent--) {
+            int parent2 = parent;
+            int child = parent*2 + 1;
+            while(child < len) {
+                if(child + 1 < len && arr[child] > arr[child+1]) {
+                    int tmp = arr[child];
+                    arr[child] = arr[child+1];
+                    arr[child+1] = tmp;
+                }
+                    parent2 = parent;
+                if(arr[parent2] > arr[child]) {
+                    int tmp = arr[parent2];
+                    arr[parent2] = arr[child];
+                    arr[child] = tmp;
+                }
+                parent2 = child;
+                child = parent2*2 + 1;
+            }
+        }
+        return Arrays.copyOf(arr,k);
     }
 }
