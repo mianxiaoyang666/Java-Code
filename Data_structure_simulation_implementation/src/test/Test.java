@@ -2,6 +2,9 @@ package test;
 
 import binarytree.CharBinaryTree;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -44,5 +47,9 @@ public class Test {
         System.out.println();
         System.out.println("=====");
         System.out.println(charBinaryTree.isCompleteTree(charBinaryTree.root));
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        queue.offer(1);
+        queue.offer(2);
+        int[] ret;
     }
 }

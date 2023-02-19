@@ -1,5 +1,8 @@
 package heap;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Queue;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -102,14 +105,14 @@ public class PriorityQueue {
     }
 
     private void shiftUp(int child) {
-        int parent = (child-1)*2;
+        int parent = (child-1)/2;
         while(child > 0) {
             if(elem[child] > elem[parent]) {
                 int tmp = elem[child];
                 elem[child] = elem[parent];
                 elem[parent] = tmp;
                 child = parent;
-                parent = (child-1) * 2;
+                parent = (child-1) / 2;
             }else {
                 break;
             }
@@ -148,27 +151,27 @@ public class PriorityQueue {
         return elem[0];
     }
 
+    class BigComparator implements Comparator<Integer> {//比较器
+        public int compare(Integer o1,Integer o2) {
+            return o2 - o1;
+        }
+    }
+
     public int[] smallestK(int[] arr, int k) {
-        int len = arr.length;
-        for(int parent = (len-1-1)/2; parent >= 0; parent--) {
-            int parent2 = parent;
-            int child = parent*2 + 1;
-            while(child < len) {
-                if(child + 1 < len && arr[child] > arr[child+1]) {
-                    int tmp = arr[child];
-                    arr[child] = arr[child+1];
-                    arr[child+1] = tmp;
-                }
-                    parent2 = parent;
-                if(arr[parent2] > arr[child]) {
-                    int tmp = arr[parent2];
-                    arr[parent2] = arr[child];
-                    arr[child] = tmp;
-                }
-                parent2 = child;
-                child = parent2*2 + 1;
+        java.util.PriorityQueue<Integer> queue = new java.util.PriorityQueue<Integer>(new BigComparator());
+        for(int i = 0;i < k;i++) {
+            queue.offer(arr[i]);
+        }
+        for(int i = k;i < arr.length;i++) {
+            if(arr[i] < queue.peek()) {
+                queue.poll();
+                queue.offer(arr[i]);
             }
         }
-        return Arrays.copyOf(arr,k);
+        int[] ret = new int[k];
+        for(int i = k-1;i >= 0; i--) {
+            ret[i] = queue.poll();
+        }
+        return ret;
     }
 }
