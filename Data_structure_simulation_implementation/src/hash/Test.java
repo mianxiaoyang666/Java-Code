@@ -1,5 +1,6 @@
 package hash;
 
+import javax.rmi.CORBA.StubDelegate;
 import java.util.*;
 
 /**
@@ -12,12 +13,92 @@ import java.util.*;
 public class Test {
     static class Cup {//杯子
         String name;
-        public Cup(String name) {
+        Integer price;
+        public Cup(String name,int price) {
             this.name = name;
+            this.price = price;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Cup cup = (Cup) o;
+            return Objects.equals(name, cup.name) && Objects.equals(price, cup.price);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, price);
         }
     }
 
     public static void main(String[] args) {
+            Cup cup1 = new Cup("猫爪杯子",10);
+            Cup cup2 = new Cup("派大星杯子",22);
+            Cup cup3 = new Cup("海绵宝宝杯子",25);
+            Cup cup4 = new Cup("猫爪杯子",10);
+            HashMap<Cup,Integer> hasMap = new HashMap<>();
+            hasMap.put(cup1,100);
+            hasMap.put(cup2,200);
+            hasMap.put(cup3,300);
+            hasMap.put(cup4,300);
+            System.out.println(hasMap.get(cup1));
+    }
+    public static void main23(String[] args) {
+        Cup cup1 = new Cup("猫爪杯子",10);
+        Cup cup2 = new Cup("派大星杯子",22);
+        Cup cup3 = new Cup("海绵宝宝杯子",25);
+        Cup cup4 = new Cup("猫爪杯子",10);
+        HashMap<Cup,Integer> hasMap = new HashMap<>();
+        hasMap.put(cup1,100);
+        hasMap.put(cup2,200);
+        hasMap.put(cup3,300);
+        hasMap.put(cup4,300);
+
+        System.out.println(hasMap.get(cup1));
+    }
+    public static void main20(String[] args) {
+        HashMap<String,Integer> hasMap = new HashMap<>();
+        hasMap.put("111",1000);
+    }
+    public static void main21(String[] args) {
+        Cup cup1 = new Cup("猫爪杯子",10);
+        Cup cup2 = new Cup("派大星杯子",22);
+        Cup cup3 = new Cup("海绵宝宝杯子",25);
+        Cup cup4 = new Cup("猫爪杯子",10);
+        HashMap<Cup,Integer> hasMap = new HashMap<>();
+        System.out.println(cup1.hashCode());
+        System.out.println(cup2.hashCode());
+        System.out.println(cup3.hashCode());
+//        System.out.println(cup1.hashCode());
+//        System.out.println(cup2.hashCode());
+//        System.out.println(cup3.hashCode());
+//        System.out.println(cup4.hashCode());
+        hasMap.put(cup1,100);
+        hasMap.put(cup2,200);
+        hasMap.put(cup3,300);
+        System.out.println(hasMap.get(cup4));
+    }
+    public static void main19(String[] args) {
+        HashBucket hashBucket = new HashBucket();
+        hashBucket.put(24,12);
+        hashBucket.put(14,111);
+        hashBucket.put(2,111);
+        hashBucket.put(3,111);
+        hashBucket.put(41,11);
+        hashBucket.put(5,111);
+        hashBucket.put(6,111);
+        hashBucket.put(7,111);
+
+        int a = hashBucket.get(14);
+        System.out.println(a);
+    }
+    public static void main18(String[] args) {
+        Integer a = 1;
+        System.out.println(a.hashCode());
+    }
+    public static void main17(String[] args) {
         Map<Integer,String> hashMap = new HashMap<>();
         hashMap.hashCode();
     }
@@ -99,12 +180,12 @@ public class Test {
     }
     public static void main3(String[] args) {
         Map<Cup,Integer> treeMap = new TreeMap<>();
-        Cup cup1 = new Cup("猫爪杯子");
-        Cup cup2 = new Cup("派大星杯子");
-        Cup cup3 = new Cup("海绵宝宝杯子");
-        treeMap.put(cup1,10);
-        treeMap.put(cup2,25);
-        treeMap.put(cup3,30);
+//        Cup cup1 = new Cup("猫爪杯子");
+//        Cup cup2 = new Cup("派大星杯子");
+//        Cup cup3 = new Cup("海绵宝宝杯子");
+//        treeMap.put(cup1,10);
+//        treeMap.put(cup2,25);
+//        treeMap.put(cup3,30);
         System.out.println(treeMap);
     }
     public static void main5(String[] args) {
